@@ -7,5 +7,7 @@
                 "runtime": "automatic"
             }
         ]
-    ]
+    ],
+    "sourceMaps": true,
+    "retainLines": true
 }
