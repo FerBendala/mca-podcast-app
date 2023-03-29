@@ -6,7 +6,9 @@ import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
 
 const Podcast = () => {
+    // Get podcast id from URL params
     const { podcastId } = useParams()
+    // Get the podcast list, expiration date and detail from local storage
     const podcastList = useLocalStorageState( 'podcastList' )[0]
     const expirationDate = useLocalStorageState( 'expirationDate' )[0]
     const [podcastDetail, setPodcastDetail] = useLocalStorageState(
@@ -15,6 +17,9 @@ const Podcast = () => {
     )
 
     useEffect( () => {
+        console.log( 'podcast.js podcastDetail:', podcastDetail )
+
+        // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage with new podcast detail data
         if ( podcastDetail?.length === 0 || isExpired( expirationDate ) ) {
             iTunesService
                 .getById( podcastId )
@@ -26,10 +31,9 @@ const Podcast = () => {
                 } )
             console.log( `%cCalling podcastId: ${podcastId}...`, 'color: yellow' )
         }
-
-        console.log( 'podcast.js podcastDetail:', podcastDetail )
     }, [podcastId] )
 
+    // Modeling the podcast data into a more understandable and usable format
     const podcastDetailMap = ( episodeData ) => {
         const podcastInfo = podcastList.filter( ( podcast ) => podcast.id === podcastId && podcast )
         const episodes = episodeData.map( ( episode ) => ( {
@@ -41,10 +45,9 @@ const Podcast = () => {
             description: episode.description,
             preview: episode.previewUrl,
         } ) )
+        episodes.shift() // Remove the first element of episodes (is invalid data)
 
-        // Remove outcontext first element
-        episodes.shift()
-
+        // Creating an object with mapped podcast detail data
         const map = {
             podcastInfo: podcastInfo,
             episodes: episodes

@@ -1,5 +1,7 @@
+// Generate an API endpoint string for the allorigins service
 const allOrigins = baseUrl => `https://api.allorigins.win/get?url=${encodeURIComponent( baseUrl )}`
 
+// Get all podcast (max 100)
 const getAll = async () => {
     try {
         const response = await fetch( allOrigins( 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json' ) )
@@ -15,7 +17,7 @@ const getAll = async () => {
     }
 }
 
-// https://itunes.apple.com/lookup?id={_id_}&media=podcast&entity=podcastEpisode
+// Get episodes of a podcast by author id
 // more info: https://performance-partners.apple.com/search-api
 const getById = async ( search ) => {
     try {

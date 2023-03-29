@@ -6,6 +6,7 @@ import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
 
 const Home = () => {
+    // Get the podcast list and expiration date from local storage
     const [podcastList, setPodcastList] = useLocalStorageState(
         'podcastList',
         { defaultValue: [] }
@@ -16,8 +17,12 @@ const Home = () => {
     )
 
     useEffect( () => {
+        console.log( 'home.js podcastList:', podcastList )
+
+        // If podcastList is empty or expirationDate is expired, make a new API call
         if ( podcastList?.length === 0 || isExpired( expirationDate ) ) {
             iTunesService.getAll().then( ( response ) => {
+                // Updating local storage with new podcast list data and expiration date
                 const podcastData = response
                 const podcastMapData = podcastListMap( podcastData )
                 const currentDate = Date.now()
@@ -26,11 +31,12 @@ const Home = () => {
                 setExpirationDate( currentDate )
             } )
 
+            // Alert logging indicating that the API is being called
             console.log( '%cCalling getAll()...', 'color: yellow' )
         }
-        console.log( 'home.js podcastList:', podcastList )
     }, [podcastList] )
 
+    // Modeling the podcast list into a more understandable and usable format
     const podcastListMap = ( podcastData ) => {
         const map = podcastData.map( ( podcast ) => ( {
             id: podcast.id.attributes['im:id'],

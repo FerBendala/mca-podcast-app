@@ -3,15 +3,20 @@ import { useParams } from 'react-router-dom'
 import useLocalStorageState from 'use-local-storage-state'
 
 const Podcast = () => {
+    // Get podcastId and episodeId from URL params
+    // Get podcastDeatil from local storage
+    // Inizialize state for episode detail
     const { podcastId, episodeId } = useParams()
-    const [episodeDetail, setEpisodeDetail] = useState( {} )
     const podcastDetail = useLocalStorageState( `podcast-${podcastId}` )[0]
+    const [episodeDetail, setEpisodeDetail] = useState( {} )
 
+    // Filter episodes to match current episodeId and set to state
     useEffect( () => {
-        const filteredEpisode = podcastDetail.episodes.filter( ( episode ) => episode.id === Number( episodeId ) )
-
-        setEpisodeDetail( filteredEpisode )
         console.log( `episode.js episode ${episodeId}:`, podcastDetail.episodes )
+        const filteredEpisode = podcastDetail.episodes.filter( ( episode ) =>
+            episode.id === Number( episodeId )
+        )
+        setEpisodeDetail( filteredEpisode )
     }, [] )
 
     return (
