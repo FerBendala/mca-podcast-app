@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import useLocalStorageState from 'use-local-storage-state'
 
 import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
+import PodcastInfo from '../components/podcast-info'
+import PodcastEpisodes from '../components/podcast-episodes'
 
-const Podcast = () => {
+const Podcast = ( { setIsLoading } ) => {
     // Get podcast id from URL params
     const { podcastId } = useParams()
     // Get the podcast list, expiration date and detail from local storage
@@ -19,72 +21,50 @@ const Podcast = () => {
     useEffect( () => {
         console.log( 'podcast.js podcastDetail:', podcastDetail )
 
-        // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage with new podcast detail data
+        // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage
         if ( podcastDetail?.length === 0 || isExpired( expirationDate ) ) {
+            setIsLoading( true )
             iTunesService
                 .getById( podcastId )
                 .then( response => {
                     const episodeData = response
-                    const episodeMapData = podcastDetailMap( episodeData )
+                    const episodeMapData = podcastModel( episodeData )
 
                     setPodcastDetail( episodeMapData )
+                    setIsLoading( false )
                 } )
-            console.log( `%cCalling podcastId: ${podcastId}...`, 'color: yellow' )
+            console.log( `%cCalling iTunesService.getById(): ${podcastId}...`, 'color: yellow' )
         }
     }, [podcastId] )
 
     // Modeling the podcast data into a more understandable and usable format
-    const podcastDetailMap = ( episodeData ) => {
+    const podcastModel = ( episodeData ) => {
         const podcastInfo = podcastList.filter( ( podcast ) => podcast.id === podcastId && podcast )
         const episodes = episodeData.map( ( episode ) => ( {
             id: episode.trackId,
             collectionId: episode.collectionId,
             title: episode.trackName,
             date: episode.releaseDate,
-            duration: episode.trackViewUrl,
+            duration: episode.trackTimeMillis,
             description: episode.description,
             preview: episode.previewUrl,
         } ) )
         episodes.shift() // Remove the first element of episodes (is invalid data)
 
         // Creating an object with mapped podcast detail data
-        const map = {
+        const podcastDetailAndEpisodes = {
             podcastInfo: podcastInfo,
             episodes: episodes
         }
 
-        return map
+        return podcastDetailAndEpisodes
     }
 
     return (
         <div>
             <h1>Detail Podcast</h1>
-            {podcastDetail?.podcastInfo?.length
-                ? podcastDetail.podcastInfo.map( ( podcast ) =>
-                    <div key={podcast.id}>
-                        <img src={podcast.image} alt={podcast.title} />
-                        <p>name: {podcast.title}</p>
-                        <p>collection id: {podcast.artist}</p>
-                        <p>{podcast.summary}</p>
-                    </div>
-                ) : <p>Loading...</p>
-            }
-            <ol>
-                {podcastDetail?.episodes?.length
-                    ? podcastDetail.episodes.map( ( { id, collectionId, title } ) =>
-                        <li key={id}>
-                            <ul>
-                                <li>collection id: {collectionId}</li>
-                                <li>id: {id}</li>
-                                <li>name: {title}</li>
-                                <li>
-                                    <Link to={`/podcast/${collectionId}/episode/${id}`}>View</Link>
-                                </li>
-                            </ul>
-                        </li>
-                    ) : <li>Loading...</li>
-                }
-            </ol>
+            <PodcastInfo podcastInfo={podcastDetail.podcastInfo} />
+            <PodcastEpisodes podcastEpisodes={podcastDetail.episodes} />
         </div>
     )
 }

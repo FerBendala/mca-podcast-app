@@ -37,6 +37,7 @@
     "webpack-dev-server": "^4.13.1"
   },
   "dependencies": {
+    "html-react-parser": "^3.0.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "use-local-storage-state": "^18.2.1"
