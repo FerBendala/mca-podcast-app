@@ -1,0 +1,49 @@
+@use './assets/sass/variables.scss' as *;
+@use './assets/sass/mixins.scss' as m;
+@use './assets/sass/functions.scss' as f;
+@import './assets/sass/reset.scss';
+
+html {
+    scroll-behavior: smooth;
+
+    body {
+        margin: 0;
+
+        color: $color-black;
+
+        font-family: $font-family;
+        line-height: 1.4;
+
+        @include m.media(laptop) {
+            font-size: 96%;
+        }
+
+        @include m.media(tablet) {
+            font-size: 80%;
+        }
+
+        @include m.media(phone) {
+            font-size: 72%;
+        }
+
+        // Basics
+        * {
+            box-sizing: border-box;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+
+            // Focus
+            &:focus {
+                outline: none;
+            }
+        }
+
+
+        // Images
+        img {
+            max-width: 100%;
+        }
+    }
+}

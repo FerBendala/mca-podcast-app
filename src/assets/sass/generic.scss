@@ -1,0 +1,54 @@
+@use "src/styles/mixins" as m;
+@use "src/styles/functions" as s;
+@use "src/styles/variables" as *;
+
+html {
+    scroll-behavior: smooth;
+    body {
+        font-family: $font-family;
+        line-height: 1.4;
+
+        * {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        // Titles
+        h2 {
+            margin-bottom: s.em(16);
+
+            font-size: s.em(24);
+            font-weight: 600;
+        }
+
+        // Images
+        img {
+            max-width: 100%;
+        }
+
+        // Container
+        .container {
+            @include m.container;
+        }
+
+        // Main
+        main {
+            // Responsive
+            $devices: (
+                "desktop": "items items items" "pomodoro . .",
+                "laptop": "items items" "pomodoro .",
+                "tablet": "items" "pomodoro",
+                "phone": "items" "pomodoro",
+            );
+
+            @each $device, $area in $devices {
+                @include m.media($device) {
+                    @include m.grid($ga: $area, $gg: em(16));
+                }
+            }
+        }
+    }
+}

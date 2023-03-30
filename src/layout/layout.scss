@@ -1,0 +1,48 @@
+@use '../assets/sass/variables.scss' as *;
+@use '../assets/sass/mixins.scss' as m;
+@use '../assets/sass/functions.scss' as f;
+
+.header {
+    @include m.container;
+    @include m.flex($ai: center, $jc: space-between);
+
+    margin: {
+        top: f.em(24);
+        bottom: f.em(24);
+    }
+
+    ;
+    border-bottom: solid f.em(1) $color-gray;
+
+    // Title
+    &__title {
+        font-size: f.em(24);
+
+        &__link {
+            @include m.flex($ai: center);
+
+            color: $color-blue;
+
+            text-decoration: none;
+
+            transition: $transition;
+
+            &:hover {
+                color: darken($color-blue, 16%);
+            }
+        }
+    }
+
+    // Loader
+    &__loader {
+        width: f.em(80);
+    }
+}
+
+.main {
+    @include m.container;
+
+    &__grid--in-layout {
+        @include m.grid ($gc: minmax(0, 1fr) minmax(0, 3fr), $gg: f.em(24));
+    }
+}

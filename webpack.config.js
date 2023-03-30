@@ -47,6 +47,26 @@ module.exports = {
                     isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-url-loader',
+                options: {
+                    limit: 10000,
+                },
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 100000,
+                            name: '[name].[ext]',
+                            outputPath: 'images/'
+                        }
+                    }
+                ]
             }
         ],
     },

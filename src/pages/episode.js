@@ -23,11 +23,10 @@ const Podcast = () => {
     }, [] )
 
     return (
-        <div>
-            <h1>Detail Podcast</h1>
+        <section className='main__grid--in-layout'>
             <PodcastInfo podcastInfo={podcastDetail.podcastInfo} />
             <EpisodeDetail episodeDetail={episodeDetail} />
-        </div>
+        </section>
     )
 }
 

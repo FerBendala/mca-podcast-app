@@ -4,7 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/home'
 import Podcast from './pages/podcast'
 import Episode from './pages/episode'
-import Header from './components/header'
+import Layout from './layout/layout'
+
+import './app.scss'
 
 
 const App = () => {
@@ -17,7 +19,7 @@ const App = () => {
                 {/* App Header */}
                 <Route path="/"
                     element={
-                        <Header isLoading={isLoading} />
+                        <Layout isLoading={isLoading} />
                     }
                 >
                     {/* App Content */}

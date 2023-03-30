@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
-import PodcastList from '../components/podcasts-list'
+import Filter from '../components/filter/filter'
+import PodcastList from '../components/podcasts-list/podcasts-list'
 
 import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
@@ -58,21 +59,25 @@ const Home = ( { setIsLoading } ) => {
         return map
     }
 
-    const handleSearch = ( event ) => {
+    const handleSearch = ( data ) => {
         const filteredList = podcastList.filter( ( podcast ) =>
-            podcast.title.toLowerCase().includes( event.target.value.toLowerCase() )
+            podcast.title.toLowerCase().includes( data.toLowerCase() )
         )
 
         setFilteredPodcastList( filteredList )
-        setSearchTerm( event.target.value )
+        setSearchTerm( data )
     }
 
     return (
-        <div>
-            <h1>Home</h1>
-            <input type='text' value={searchTerm} onChange={handleSearch} />
+        <>
+            <Filter
+                resultsNumber={filteredPodcastList.length}
+                searchTerm={searchTerm}
+                setSearchTerm={handleSearch}
+                text='Filter by something...'
+            />
             <PodcastList podcastList={filteredPodcastList} />
-        </div>
+        </>
     )
 }
 

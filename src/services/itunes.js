@@ -26,8 +26,6 @@ const getById = async ( search ) => {
         const parseData = JSON.parse( data.contents )
         const entry = parseData.results
 
-        console.log( entry )
-
         return entry
     }
     catch ( e ) {
