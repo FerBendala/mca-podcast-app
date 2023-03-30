@@ -11,8 +11,7 @@ const getAll = async () => {
         const entries = parseData.feed.entry
 
         return entries
-    }
-    catch ( e ) {
+    } catch ( e ) {
         console.log( 'Error:', e )
     }
 }
@@ -27,8 +26,7 @@ const getById = async ( search ) => {
         const entry = parseData.results
 
         return entry
-    }
-    catch ( e ) {
+    } catch ( e ) {
         console.log( 'Error:', e )
     }
 }

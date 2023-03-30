@@ -21,8 +21,6 @@ const Home = ( { setIsLoading } ) => {
 
     // On load page
     useEffect( () => {
-        console.log( 'home.js podcastList:', podcastList )
-
         // If podcastList is empty or expirationDate is expired, make a new API call
         if ( podcastList?.length === 0 || isExpired( expirationDate ) ) {
             setIsLoading( true )

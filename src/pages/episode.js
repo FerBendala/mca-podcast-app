@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useLocalStorageState from 'use-local-storage-state'
-import EpisodeDetail from '../components/episode-detail'
+import EpisodeDetail from '../components/episode-detail/episode-detail'
 
-import PodcastInfo from '../components/podcast-info'
+import PodcastInfo from '../components/podcast-info/podcast-info'
 
 const Podcast = () => {
     // Get podcastId and episodeId from URL params
@@ -15,7 +15,6 @@ const Podcast = () => {
 
     // Filter episodes to match current episodeId and set to state
     useEffect( () => {
-        console.log( `episode.js episode ${episodeId}:`, podcastDetail.episodes )
         const filteredEpisode = podcastDetail.episodes.filter( ( episode ) =>
             episode.id === Number( episodeId )
         )

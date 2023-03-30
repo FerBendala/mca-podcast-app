@@ -8,7 +8,7 @@
 
     margin: {
         top: f.em(24);
-        bottom: f.em(24);
+        bottom: f.em(32);
     }
 
     ;
@@ -21,8 +21,11 @@
         &__link {
             @include m.flex($ai: center);
 
+            margin-bottom: f.em(12);
+
             color: $color-blue;
 
+            font-weight: 700;
             text-decoration: none;
 
             transition: $transition;
@@ -35,12 +38,13 @@
 
     // Loader
     &__loader {
-        width: f.em(80);
+        width: f.em(48);
     }
 }
 
 .main {
     @include m.container;
+    margin-bottom: f.em(80);
 
     &__grid--in-layout {
         @include m.grid ($gc: minmax(0, 1fr) minmax(0, 3fr), $gg: f.em(24));

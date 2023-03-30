@@ -4,8 +4,8 @@ import useLocalStorageState from 'use-local-storage-state'
 
 import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
-import PodcastInfo from '../components/podcast-info'
-import PodcastEpisodes from '../components/podcast-episodes'
+import PodcastInfo from '../components/podcast-info/podcast-info'
+import PodcastEpisodes from '../components/podcast-episodes/podcast-episodes'
 
 const Podcast = ( { setIsLoading } ) => {
     // Get podcast id from URL params
@@ -19,8 +19,6 @@ const Podcast = ( { setIsLoading } ) => {
     )
 
     useEffect( () => {
-        console.log( 'podcast.js podcastDetail:', podcastDetail )
-
         // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage
         if ( podcastDetail?.length === 0 || isExpired( expirationDate ) ) {
             setIsLoading( true )
