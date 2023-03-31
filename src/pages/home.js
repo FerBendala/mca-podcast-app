@@ -18,34 +18,47 @@ const Home = ( { setIsLoading } ) => {
     ) // Local storage state
     const [searchTerm, setSearchTerm] = useState( '' )
     const [filteredPodcastList, setFilteredPodcastList] = useState( [] )
+    // Error state
+    const [error, setError] = useState( null )
 
     // On load page
     useEffect( () => {
-        // If podcastList is empty or expirationDate is expired, make a new API call
-        if ( podcastList?.length === 0 || isExpired( expirationDate ) ) {
-            setIsLoading( true )
-
-            iTunesService.getAll().then( ( response ) => {
-                // Updating local storage with new podcast list data and expiration date
-                const podcastsData = response
-                const podcastsModelData = podcastsListModel( podcastsData )
-                const currentDate = Date.now()
-
-                setPodcastList( podcastsModelData )
-                setExpirationDate( currentDate )
-                setFilteredPodcastList( podcastsModelData )
-                setIsLoading( false )
-            } )
-
-            // Alert logging indicating that the API is being called
-            console.log( '%cCalling iTunesService.getAll()...', 'color: yellow' )
-        } else {
-            setFilteredPodcastList( podcastList )
-        }
+        fetchData()
     }, [] )
 
+    // Fetch iTunes api podcast list data
+    const fetchData = async () => {
+        try {
+            // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage
+            if ( podcastList?.length === 0 || isExpired( expirationDate ) ) {
+                setIsLoading( true )
+                iTunesService
+                    .getAll()
+                    .then( ( response ) => {
+                        // Updating local storage with new podcast list data and expiration date
+                        const podcastsData = response
+                        if ( !podcastsData || podcastsData.length === 0 ) {
+                            setError( 'No episodes found for this podcast.' )
+                            return
+                        }
+                        const podcastsModelData = podcastsListModel( podcastsData )
+                        const currentDate = Date.now()
+
+                        setPodcastList( podcastsModelData )
+                        setExpirationDate( currentDate )
+                        setFilteredPodcastList( podcastsModelData )
+                        setIsLoading( false )
+                    } )
+                console.log( '%cCalling iTunesService.getAll()...', 'color: yellow' )
+            } else {
+                setFilteredPodcastList( podcastList )
+            }
+        } catch ( error ) {
+            setError( 'Failed to fetch podcast data.' )
+        }
+    }
+    // Modeling the podcast list into a more understandable and usable format
     const podcastsListModel = ( podcastData ) => {
-        // Modeling the podcast list into a more understandable and usable format
         const podcastsModel = podcastData.map( ( podcast ) => ( {
             id: podcast.id.attributes['im:id'],
             title: podcast.title.label,
@@ -57,6 +70,7 @@ const Home = ( { setIsLoading } ) => {
         return podcastsModel
     }
 
+    // Handle search filter
     const handleSearch = ( data ) => {
         const filteredList = podcastList.filter( ( podcast ) =>
             podcast.title.toLowerCase().includes( data.toLowerCase() )
@@ -64,6 +78,11 @@ const Home = ( { setIsLoading } ) => {
 
         setFilteredPodcastList( filteredList )
         setSearchTerm( data )
+    }
+
+    // Log error
+    if ( error ) {
+        console.log( error )
     }
 
     return (

@@ -7,11 +7,17 @@ import PodcastInfo from '../components/podcast-info/podcast-info'
 
 const Podcast = () => {
     // Get podcastId and episodeId from URL params
-    // Get podcastDeatil from local storage
     // Inizialize state for episode detail
+    // Get podcastDeatil from local storage and check if is valid data
     const { podcastId, episodeId } = useParams()
-    const podcastDetail = useLocalStorageState( `podcast-${podcastId}` )[0]
     const [episodeDetail, setEpisodeDetail] = useState( {} )
+    let podcastDetail
+    try {
+        podcastDetail = useLocalStorageState( `podcast-${podcastId}` )[0]
+    } catch ( error ) {
+        console.error( `Error obtaining podcast data: ${error.message}` )
+        podcastDetail = { episodes: [], podcastInfo: {} }
+    }
 
     // Filter episodes to match current episodeId and set to state
     useEffect( () => {

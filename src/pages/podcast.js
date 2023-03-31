@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -17,23 +17,38 @@ const Podcast = ( { setIsLoading } ) => {
         `podcast-${podcastId}`,
         { defaultValue: [] }
     )
+    // Error state
+    const [error, setError] = useState( null )
 
     useEffect( () => {
-        // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage
-        if ( podcastDetail?.length === 0 || isExpired( expirationDate ) ) {
-            setIsLoading( true )
-            iTunesService
-                .getById( podcastId )
-                .then( response => {
-                    const episodeData = response
-                    const episodeModelData = podcastModel( episodeData, podcastId )
+        fetchData()
+    }, [] )
 
-                    setPodcastDetail( episodeModelData )
-                    setIsLoading( false )
-                } )
-            console.log( `%cCalling iTunesService.getById(): ${podcastId}...`, 'color: yellow' )
+    // Fetch iTunes api podcast detail data
+    const fetchData = async () => {
+        try {
+            // If podcastDetail is empty or expirationDate is expired, make a new API call and update local storage
+            if ( podcastDetail?.length === 0 || isExpired( expirationDate ) ) {
+                setIsLoading( true )
+                iTunesService
+                    .getById( podcastId )
+                    .then( response => {
+                        const episodeData = response
+                        if ( !episodeData || episodeData.length === 0 ) {
+                            setError( 'No episodes found for this podcast.' )
+                            return
+                        }
+                        const episodeModelData = podcastModel( episodeData, podcastId )
+
+                        setPodcastDetail( episodeModelData )
+                        setIsLoading( false )
+                    } )
+                console.log( `%cCalling iTunesService.getById(): ${podcastId}...`, 'color: yellow' )
+            }
+        } catch ( error ) {
+            setError( 'Failed to fetch podcast data.' )
         }
-    }, [podcastId] )
+    }
 
     // Modeling the podcast data into a more understandable and usable format
     const podcastModel = ( episodeData, id ) => {
@@ -63,6 +78,11 @@ const Podcast = ( { setIsLoading } ) => {
         console.log( episodesModel )
 
         return episodesModel
+    }
+
+    // Log error
+    if ( error ) {
+        console.log( error )
     }
 
     return (
