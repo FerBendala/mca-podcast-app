@@ -16,6 +16,14 @@
 
         font-family: $font-family;
         font-size: f.em(16);
+
+        transition: $transition;
+
+        &:hover {
+            box-shadow: $box-shadow;
+            
+            border-color: lighten($color-gray, 16%);
+        }
     }
 
     &__results {

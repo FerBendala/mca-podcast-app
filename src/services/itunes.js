@@ -1,4 +1,5 @@
 // Generate an API endpoint string for the allorigins service
+// more info: https://cors-anywhere.herokuapp.com/
 const allOrigins = baseUrl => `https://api.allorigins.win/get?url=${encodeURIComponent( baseUrl )}`
 
 // Get all podcast (max 100)

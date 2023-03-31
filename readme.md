@@ -21,7 +21,7 @@ npm run build:dev
 ```bash
 npx serve serve:dev
 ```
-3. Open your web browser and navigate to http://localhost:8001/ to view the application.
+3. Open your web browser and navigate to http://192.168.1.20:8001/ or http://localhost:8001/ to view the application.
 
 
 ## Production
@@ -34,4 +34,4 @@ npm run build:prod
 ```bash
 npx serve serve:dist
 ```
-3. Open your web browser and navigate to http://localhost:8000/ to view the application.
+3. Open your web browser and navigate to http://192.168.1.20:8001/ or http://localhost:8000/ to view the application.

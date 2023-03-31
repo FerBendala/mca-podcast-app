@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import Layout from './pages/layout'
 import Home from './pages/home'
 import Podcast from './pages/podcast'
 import Episode from './pages/episode'
-import Layout from './layout/layout'
 
 import './app.scss'
 

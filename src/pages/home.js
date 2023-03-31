@@ -27,13 +27,13 @@ const Home = ( { setIsLoading } ) => {
 
             iTunesService.getAll().then( ( response ) => {
                 // Updating local storage with new podcast list data and expiration date
-                const podcastData = response
-                const podcastMapData = podcastListModel( podcastData )
+                const podcastsData = response
+                const podcastsModelData = podcastsListModel( podcastsData )
                 const currentDate = Date.now()
 
-                setPodcastList( podcastMapData )
+                setPodcastList( podcastsModelData )
                 setExpirationDate( currentDate )
-                setFilteredPodcastList( podcastMapData )
+                setFilteredPodcastList( podcastsModelData )
                 setIsLoading( false )
             } )
 
@@ -44,9 +44,9 @@ const Home = ( { setIsLoading } ) => {
         }
     }, [] )
 
-    const podcastListModel = ( podcastData ) => {
+    const podcastsListModel = ( podcastData ) => {
         // Modeling the podcast list into a more understandable and usable format
-        const map = podcastData.map( ( podcast ) => ( {
+        const podcastsModel = podcastData.map( ( podcast ) => ( {
             id: podcast.id.attributes['im:id'],
             title: podcast.title.label,
             image: podcast['im:image'][2].label,
@@ -54,7 +54,7 @@ const Home = ( { setIsLoading } ) => {
             summary: podcast.summary.label,
         } ) )
 
-        return map
+        return podcastsModel
     }
 
     const handleSearch = ( data ) => {

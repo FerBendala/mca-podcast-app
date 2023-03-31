@@ -26,9 +26,9 @@ const Podcast = ( { setIsLoading } ) => {
                 .getById( podcastId )
                 .then( response => {
                     const episodeData = response
-                    const episodeMapData = podcastModel( episodeData )
+                    const episodeModelData = podcastModel( episodeData, podcastId )
 
-                    setPodcastDetail( episodeMapData )
+                    setPodcastDetail( episodeModelData )
                     setIsLoading( false )
                 } )
             console.log( `%cCalling iTunesService.getById(): ${podcastId}...`, 'color: yellow' )
@@ -36,8 +36,13 @@ const Podcast = ( { setIsLoading } ) => {
     }, [podcastId] )
 
     // Modeling the podcast data into a more understandable and usable format
-    const podcastModel = ( episodeData ) => {
-        const podcastInfo = podcastList.filter( ( podcast ) => podcast.id === podcastId && podcast )
+    const podcastModel = ( episodeData, id ) => {
+        const podcastInfo = podcastList.filter( ( podcast ) => podcast.id === id )
+        if ( !podcastInfo ) {
+            console.log( `No podcast found with id ${id}` )
+            return null
+        }
+
         const episodes = episodeData.map( ( episode ) => ( {
             id: episode.trackId,
             collectionId: episode.collectionId,
@@ -50,12 +55,14 @@ const Podcast = ( { setIsLoading } ) => {
         episodes.shift() // Remove the first element of episodes (is invalid data)
 
         // Creating an object with mapped podcast detail data
-        const podcastDetailAndEpisodes = {
+        const episodesModel = {
             podcastInfo: podcastInfo,
             episodes: episodes
         }
 
-        return podcastDetailAndEpisodes
+        console.log( episodesModel )
+
+        return episodesModel
     }
 
     return (
