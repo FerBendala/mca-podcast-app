@@ -75,8 +75,6 @@ const Podcast = ( { setIsLoading } ) => {
             episodes: episodes
         }
 
-        console.log( episodesModel )
-
         return episodesModel
     }
 

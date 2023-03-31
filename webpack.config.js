@@ -15,7 +15,7 @@ module.exports = {
         path: path.resolve( __dirname, isDevelopment ? 'dev_build' : 'dist' )
     },
     mode: isDevelopment ? 'development' : 'production',
-    devtool: isDevelopment ? 'eval-source-map' : false,
+    devtool: isDevelopment ? 'inline-source-map' : false,
     plugins: [
         new HtmlWebpackPlugin( {
             template: path.join( __dirname, 'public', 'index.html' ),

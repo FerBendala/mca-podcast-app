@@ -13,6 +13,8 @@ const App = () => {
     // Set loading state when api are called
     const [isLoading, setIsLoading] = useState( false )
 
+    const handleIsLogin = ( value ) => setIsLoading( value )
+
     return (
         <BrowserRouter>
             <Routes>
@@ -25,12 +27,15 @@ const App = () => {
                     {/* App Content */}
                     <Route index
                         element={
-                            <Home setIsLoading={( value ) => setIsLoading( value )} />
+                            <Home
+                                setIsLoading={handleIsLogin}
+                                isLoading={isLoading}
+                            />
                         }
                     />
                     <Route path='podcast/:podcastId'
                         element={
-                            <Podcast setIsLoading={( value ) => setIsLoading( value )} />
+                            <Podcast setIsLoading={handleIsLogin} />
                         }
                     />
                     <Route path='podcast/:podcastId/episode/:episodeId'

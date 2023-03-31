@@ -7,7 +7,7 @@ import PodcastList from '../components/podcasts-list/podcasts-list'
 import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
 
-const Home = ( { setIsLoading } ) => {
+const Home = ( { isLoading, setIsLoading } ) => {
     const [podcastList, setPodcastList] = useLocalStorageState(
         'podcastList',
         { defaultValue: [] }
@@ -87,13 +87,17 @@ const Home = ( { setIsLoading } ) => {
 
     return (
         <>
-            <Filter
-                resultsNumber={filteredPodcastList.length}
-                searchTerm={searchTerm}
-                setSearchTerm={handleSearch}
-                text='Filter by something...'
-            />
-            <PodcastList podcastList={filteredPodcastList} />
+            {!isLoading && (
+                <>
+                    <Filter
+                        resultsNumber={filteredPodcastList.length}
+                        searchTerm={searchTerm}
+                        setSearchTerm={handleSearch}
+                        text='Filter by something...'
+                    />
+                    <PodcastList podcastList={filteredPodcastList} />
+                </>
+            )}
         </>
     )
 }
