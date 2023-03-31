@@ -14,7 +14,6 @@
     ;
     border-bottom: solid f.em(1) $color-gray;
 
-    // Title
     &__title {
         font-size: f.em(24);
 
@@ -36,7 +35,6 @@
         }
     }
 
-    // Loader
     &__loader {
         width: f.em(48);
     }
