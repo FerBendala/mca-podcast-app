@@ -51,9 +51,11 @@ const Home = ( { isLoading, setIsLoading } ) => {
                     } )
                 console.log( '%cCalling iTunesService.getAll()...', 'color: yellow' )
             } else {
+                setIsLoading( false )
                 setFilteredPodcastList( podcastList )
             }
         } catch ( error ) {
+            setIsLoading( false )
             setError( 'Failed to fetch podcast data.' )
         }
     }

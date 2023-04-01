@@ -21,7 +21,10 @@ const App = () => {
                 {/* App Header */}
                 <Route path="/"
                     element={
-                        <Layout isLoading={isLoading} />
+                        <Layout
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
+                        />
                     }
                 >
                     {/* App Content */}

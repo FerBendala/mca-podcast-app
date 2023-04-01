@@ -44,8 +44,11 @@ const Podcast = ( { setIsLoading } ) => {
                         setIsLoading( false )
                     } )
                 console.log( `%cCalling iTunesService.getById(): ${podcastId}...`, 'color: yellow' )
+            } else {
+                setIsLoading( false )
             }
         } catch ( error ) {
+            setIsLoading( false )
             setError( 'Failed to fetch podcast data.' )
         }
     }
