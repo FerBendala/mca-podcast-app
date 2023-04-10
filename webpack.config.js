@@ -12,10 +12,14 @@ module.exports = {
         filename: isProduction
             ? 'main[contenthash].js'
             : 'main.js',
-        path: path.resolve( __dirname, isDevelopment ? 'dev_build' : 'dist' )
+        path: path.resolve( __dirname, isDevelopment ? 'dev_build' : 'dist' ),
+        publicPath: '/'
     },
     mode: isDevelopment ? 'development' : 'production',
     devtool: isDevelopment ? 'inline-source-map' : false,
+    devServer: {
+        historyApiFallback: true
+    },
     plugins: [
         new HtmlWebpackPlugin( {
             template: path.join( __dirname, 'public', 'index.html' ),
@@ -72,5 +76,5 @@ module.exports = {
     },
     resolve: {
         extensions: ['*', '.js', '.jsx']
-    }
+    },
 }

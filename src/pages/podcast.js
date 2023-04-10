@@ -43,7 +43,6 @@ const Podcast = ( { setIsLoading } ) => {
                         setPodcastDetail( episodeModelData )
                         setIsLoading( false )
                     } )
-                console.log( `%cCalling iTunesService.getById(): ${podcastId}...`, 'color: yellow' )
             } else {
                 setIsLoading( false )
             }
@@ -57,7 +56,6 @@ const Podcast = ( { setIsLoading } ) => {
     const podcastModel = ( episodeData, id ) => {
         const podcastInfo = podcastList.filter( ( podcast ) => podcast.id === id )
         if ( !podcastInfo ) {
-            console.log( `No podcast found with id ${id}` )
             return null
         }
 
@@ -83,7 +81,7 @@ const Podcast = ( { setIsLoading } ) => {
 
     // Log error
     if ( error ) {
-        console.log( error )
+        console.error( error )
     }
 
     return (

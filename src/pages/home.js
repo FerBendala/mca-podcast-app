@@ -49,7 +49,6 @@ const Home = ( { isLoading, setIsLoading } ) => {
                         setFilteredPodcastList( podcastsModelData )
                         setIsLoading( false )
                     } )
-                console.log( '%cCalling iTunesService.getAll()...', 'color: yellow' )
             } else {
                 setIsLoading( false )
                 setFilteredPodcastList( podcastList )
@@ -84,7 +83,7 @@ const Home = ( { isLoading, setIsLoading } ) => {
 
     // Log error
     if ( error ) {
-        console.log( error )
+        console.error( error )
     }
 
     return (
