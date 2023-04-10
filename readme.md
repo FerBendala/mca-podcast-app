@@ -19,7 +19,7 @@ npm run build:dev
 ```
 2. Run the following command to start the server:
 ```bash
-npx serve serve:dev
+np run serve:dev
 ```
 3. Open your web browser and navigate to http://192.168.1.20:8001/ or http://localhost:8001/ to view the application.
 
@@ -32,6 +32,6 @@ npm run build:prod
 ```
 2. Run the following command to start the server:
 ```bash
-npx serve serve:dist
+npx run serve:prod
 ```
 3. Open your web browser and navigate to http://192.168.1.20:8001/ or http://localhost:8000/ to view the application.
