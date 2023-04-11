@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
 import Filter from '../components/filter/filter'
-import PodcastList from '../components/podcasts-list/podcasts-list'
+import PodcastsList from '../components/podcasts-list/podcasts-list'
 
 import { isExpired } from '../utils/utils'
 import iTunesService from '../services/itunes'
@@ -96,7 +96,7 @@ const Home = ( { isLoading, setIsLoading } ) => {
                         setSearchTerm={handleSearch}
                         text='Filter by something...'
                     />
-                    <PodcastList podcastList={filteredPodcastList} />
+                    <PodcastsList podcastsList={filteredPodcastList} />
                 </>
             )}
         </>

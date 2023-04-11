@@ -1,11 +1,7 @@
 import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
-
 import './podcast-info.scss'
 
 const PodcastInfo = ( { podcastInfo = [] } ) => {
-    const { podcastId } = useParams()
-
     return (
         <>
             {Array.isArray( podcastInfo ) && podcastInfo.length > 0
@@ -15,14 +11,14 @@ const PodcastInfo = ( { podcastInfo = [] } ) => {
                         className='podcast-info'
                     >
                         <Link
-                            to={`/podcast/${podcastId}`}
+                            to={`/podcast/${id}`}
                             className='podcast-info__image'
                         >
                             <img src={image} alt={title} title={title} />
                         </Link>
                         <div className='podcast-info__detail'>
                             <Link
-                                to={`/podcast/${podcastId}`}
+                                to={`/podcast/${id}`}
                                 className='podcast-info__detail__link'
                             >
                                 {title}

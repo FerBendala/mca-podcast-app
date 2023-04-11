@@ -45,7 +45,10 @@ const App = () => {
                         element={<Episode />}
                     />
                     <Route path='*'
-                        element={<Home />}
+                        element={<Home
+                            setIsLoading={handleIsLogin}
+                            isLoading={isLoading}
+                        />}
                     />
                 </Route>
             </Routes>

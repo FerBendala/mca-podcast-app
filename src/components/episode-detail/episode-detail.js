@@ -5,8 +5,9 @@ const EpisodeDetail = ( { episodeDetail = [] } ) =>
     <>
         {Array.isArray( episodeDetail ) && episodeDetail.length > 0
             && episodeDetail.map( ( { id, title, description, preview } ) => (
-                <div
+                <article
                     key={id}
+                    id={id}
                     className='episode-detail'
                 >
                     <h2 className='episode-detail__title'>{title}</h2>
@@ -18,7 +19,7 @@ const EpisodeDetail = ( { episodeDetail = [] } ) =>
                     >
                         Your browser does not support the audio element.
                     </audio>
-                </div>
+                </article>
             ) )
         }
     </ >

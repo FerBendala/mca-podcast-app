@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom'
 import './podcasts-list.scss'
 
-const PodcastList = ( { podcastList = [] } ) =>
+const PodcastsList = ( { podcastsList = [] } ) =>
     <section className='podcast-list'>
-        {Array.isArray( podcastList ) && podcastList.length > 0
-            && podcastList.map( ( { id, title, image, artist } ) => (
+        {Array.isArray( podcastsList ) && podcastsList.length > 0
+            && podcastsList.map( ( { id, title, image, artist } ) => (
                 <article
                     key={id}
                     className='podcast-list__item'
                 >
                     <Link
                         to={`/podcast/${id}`}
+                        id={id}
                         className='podcast-list__item__link'
                     >
                         <img
@@ -27,4 +28,4 @@ const PodcastList = ( { podcastList = [] } ) =>
         }
     </section>
 
-export default PodcastList
+export default PodcastsList
